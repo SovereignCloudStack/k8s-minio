@@ -1,0 +1,5 @@
+bases:
+- https://github.com/minio/minio-operator/operator-deployment
+
+resources:
+- minio.yaml

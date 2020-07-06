@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: engineerd/setup-kind@v0.4.0
+    - name: Apply overlay
+      run: kubectl apply -k envs/kind
+    - name: Wait for operator to be Ready
+      run: kubectl wait deployment -n minio-operator minio-operator --for=condition=Available
+    - name: Wait for minio to be Ready
+      run: |
+        sleep 2
+        kubectl wait pod minio-0 --for=condition=Ready
+    - name: Check if service is working as expected
+      run: |
+        SCRIPT='
+        set -ex
+        mc config host add test-minio http://minio-service:9000 minio minio123
+        mc mb test
+        INPUT="Hello from object storage"
+        echo -n "$INPUT" | mc pipe minio-test/test/object001
+        OUTPUT="$(mc cat minio-test/test/object001)"
+        [[ "$OUTPUT" = "$INPUT" ]] || exit 1'
+        kubectl run -it --restart=Never health-check --rm --image=minio/mc --quiet --command -- sh -c "$($SCRIPT)"

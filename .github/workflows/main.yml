@@ -16,7 +16,7 @@ jobs:
         version: v0.8.1
     - uses: imranismail/setup-kustomize@v1
       with:
-        kustomize-version: 3.1.0
+        kustomize-version: 3.8.0
     - name: Apply overlay
       run: kustomize build envs/kind | kubectl apply -f -
     - name: Wait for operator to be Ready

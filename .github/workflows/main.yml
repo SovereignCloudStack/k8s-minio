@@ -39,4 +39,4 @@ jobs:
         echo -n "$INPUT" | mc pipe minio-test/test/object001
         OUTPUT="$(mc cat minio-test/test/object001)"
         [[ "$OUTPUT" = "$INPUT" ]] || exit 1'
-        kubectl run -it --restart=Never health-check --rm --image=minio/mc --quiet --command -- sh -c "$SCRIPT"
+        kubectl run -i --restart=Never health-check --rm --image=minio/mc --quiet --command -- sh -c "$SCRIPT"

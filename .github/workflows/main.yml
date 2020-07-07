@@ -38,5 +38,5 @@ jobs:
         INPUT="Hello from object storage"
         echo -n "$INPUT" | mc pipe minio-test/test/object001
         OUTPUT="$(mc cat minio-test/test/object001)"
-        [[ "wrong$OUTPUT" = "$INPUT" ]] || exit 1'
+        [[ "$OUTPUT" = "$INPUT" ]] || exit 1'
         kubectl run -it --restart=Never health-check --rm --image=minio/mc --quiet --command -- sh -c "$SCRIPT"

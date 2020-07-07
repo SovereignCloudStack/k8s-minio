@@ -29,6 +29,10 @@ jobs:
         do
           sleep 1
         done
+        until [[ "$(kubectl get statefulset minio '--output=go-template={{.status.readyReplicas}}')" = "1" ]]
+        do
+          sleep 1
+        done
     - name: Check if service is working as expected
       run: |
         SCRIPT='

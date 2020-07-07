@@ -17,8 +17,10 @@ jobs:
     - uses: imranismail/setup-kustomize@v1
       with:
         kustomize-version: 3.8.0
+    - name: Apply operator
+      run: kustomize build github.com/minio/minio-operator/operator-deployment?ref=2.0.8 | kubectl apply -f -
     - name: Apply overlay
-      run: kustomize build envs/kind | kubectl apply --server-side -f -
+      run: kustomize build envs/kind | kubectl apply -f -
     - name: Wait for operator to be Ready
       run: kubectl wait deployment -n minio-operator minio-operator --for=condition=Available
     - name: Wait for minio to be Ready

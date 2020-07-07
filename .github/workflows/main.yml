@@ -18,7 +18,7 @@ jobs:
       with:
         kustomize-version: 3.8.0
     - name: Apply overlay
-      run: kustomize build envs/kind | kubectl apply -f -
+      run: kustomize build envs/kind | kubectl apply --server-side -f -
     - name: Wait for operator to be Ready
       run: kubectl wait deployment -n minio-operator minio-operator --for=condition=Available
     - name: Wait for minio to be Ready

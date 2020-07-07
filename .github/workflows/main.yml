@@ -21,8 +21,6 @@ jobs:
       run: kustomize build github.com/minio/minio-operator/operator-deployment?ref=2.0.8 | kubectl apply -f -
     - name: Apply overlay
       run: kustomize build envs/kind | kubectl apply -f -
-    - name: Wait for operator to be Ready
-      run: kubectl wait deployment -n minio-operator minio-operator --for=condition=Available
     - name: Wait for minio to be Ready
       run: |
         until [[ "$(kubectl get minioinstance minio '--output=go-template={{.status.currentState}}')" = "Ready" ]]

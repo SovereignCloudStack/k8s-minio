@@ -25,8 +25,10 @@ jobs:
       run: kubectl wait deployment -n minio-operator minio-operator --for=condition=Available
     - name: Wait for minio to be Ready
       run: |
-        sleep 2
-        kubectl wait pod minio-0 --for=condition=Ready
+        until [[ "$(kubectl get minioinstance minio '--output=go-template={{.status.currentState}}')" = "Ready" ]]
+        do
+          sleep 1
+        done
     - name: Check if service is working as expected
       run: |
         SCRIPT='

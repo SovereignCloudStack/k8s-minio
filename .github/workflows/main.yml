@@ -12,10 +12,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: engineerd/setup-kind@v0.4.0
+    - name: kustomize build
+      uses: karancode/kustomize-github-action@v1.0.2
       with:
-        version: v0.8.1
+        kustomize_version: 3.8.0
+        kustomize_build_dir: envs/kind
+        kustomize_output_file: envs/kind/rendered.yaml
     - name: Apply overlay
-      run: kubectl apply -k envs/kind
+      run: kubectl apply -f envs/kind/rendered.yaml
     - name: Wait for operator to be Ready
       run: kubectl wait deployment -n minio-operator minio-operator --for=condition=Available
     - name: Wait for minio to be Ready

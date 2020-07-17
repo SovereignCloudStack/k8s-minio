@@ -53,7 +53,7 @@ jobs:
         mc mb test
         INPUT="Hello from object storage"
         echo -n "$INPUT" | mc pipe minio-test/test/object001
-        OUTPUT="$(mc cat minio-test/test/object001)"
+        OUTPUT="$(mc cat minio-test/test/object001)somemoredata"
         [[ "$OUTPUT" = "$INPUT" ]] || exit 1'
     - name: Fetch fluxcd logs
       if: ${{ always() }}

@@ -1,2 +1,5 @@
 bases:
 - ../../base
+
+resources:
+- credentials.yaml

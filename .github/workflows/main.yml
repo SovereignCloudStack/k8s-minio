@@ -26,6 +26,7 @@ jobs:
         --registry-disable-scanning=true \
         --git-email=invalid@scs.community \
         --git-url=https://github.com/$GITHUB_REPOSITORY.git \
+        --manifest-generation=true \
         --namespace=flux | kubectl apply -f -
     - name: Verify install
       run: kubectl -n flux rollout status deploy/flux --timeout=1m

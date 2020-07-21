@@ -1,5 +1,2 @@
-bases:
-- github.com/minio/minio-operator/operator-deployment?ref=2.0.8
-
 resources:
 - minio.yaml

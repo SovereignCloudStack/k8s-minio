@@ -2,10 +2,10 @@
 name: Sync with generics repository
 
 on:
-  schedule: 
-    - cron: "*/15 * * * *"
-  repository_dispatch:
-    types: [sync-with-generics-repository]
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   sync-with-generics-repository:

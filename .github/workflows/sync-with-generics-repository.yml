@@ -3,7 +3,7 @@ name: Sync with generics repository
 
 on:
   schedule: 
-    - cron: "*/5 * * * *"
+    - cron: "0 0 * * *"
 
 jobs:
   sync-with-generics-repository:

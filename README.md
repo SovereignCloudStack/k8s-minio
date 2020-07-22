@@ -1,7 +1,5 @@
 # Deployment manifests for MinIO®
 
-![CI](https://github.com/SovereignCloudStack/k8s-minio/workflows/CI/badge.svg)
-
 ## Attribution
 
 MINIO/MinIO is a trademark of the MinIO Corporation which is not affiliated with the SCS project.

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+until [[ "$(kubectl get minioinstance minio '--output=go-template={{.status.currentState}}')" = "Ready" ]]
+do
+  sleep 1
+done
+until [[ "$(kubectl get statefulset minio '--output=go-template={{.status.readyReplicas}}')" = "1" ]]
+do
+  sleep 1
+done

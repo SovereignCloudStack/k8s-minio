@@ -1,14 +1,13 @@
 # Deployment manifests for MinIO®
 
-## Attribution
+## Attributions
 
 MINIO/MinIO is a trademark of the MinIO Corporation which is not affiliated with the SCS project.
 
 ## Repository content
 
 This repository is intended to include all relevant configuration
-and Kubernetes manifests for the deployment of the open source MinIO
-object storage software inside SCS.
+and Kubernetes manifests for the deployment of the open source MinIO object storage software inside SCS.
 
 ## Repository layout
 
@@ -21,3 +20,5 @@ environments/clusters.
 In order to ensure that every component inside of SCS behaves as
 expected, there should be simple smoke tests.
 These tests are implemented using GitHub Actions/Workflows.
+
+

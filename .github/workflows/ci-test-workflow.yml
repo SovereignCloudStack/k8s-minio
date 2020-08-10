@@ -35,26 +35,14 @@ jobs:
       env:
         FLUX_FORWARD_NAMESPACE: flux
       run: fluxctl sync
-    - name: Wait for minio to be Ready
-      run: |
-        until [[ "$(kubectl get minioinstance minio '--output=go-template={{.status.currentState}}')" = "Ready" ]]
-        do
-          sleep 1
-        done
-        until [[ "$(kubectl get statefulset minio '--output=go-template={{.status.readyReplicas}}')" = "1" ]]
-        do
-          sleep 1
-        done
+    - name: Wait for service to be Ready
+      run: ./test/wait
     - name: Check if service is working as expected
-      run: |
-        kubectl run -i --restart=Never health-check --rm --image=minio/mc --command -- sh -c '
-        set -ex
-        mc config host add test-minio http://minio-service:9000 minio minio123
-        mc mb test
-        INPUT="Hello from object storage"
-        echo -n "$INPUT" | mc pipe minio-test/test/object001
-        OUTPUT="$(mc cat minio-test/test/object001)"
-        [[ "$OUTPUT" = "$INPUT" ]] || exit 1'
+      run: ./test/test
     - name: Fetch fluxcd logs
       if: ${{ always() }}
       run: kubectl logs -n flux deploy/flux
+    - name: Fetch helm-operator logs if present
+      if: ${{ always() }}
+      run: |
+        kubectl get deploy -n flux helm-operator && kubectl logs -n flux deploy/helm-operator || echo 'helm-operator not present'

@@ -3,7 +3,7 @@
 kubectl run -i --restart=Never health-check --rm --image=minio/mc --command -- sh -c '
 set -ex
 mc config host add test-minio http://minio-service:9000 minio minio123
-mc mb test
+mc mb test-minio/test
 INPUT="Hello from object storage"
 echo -n "$INPUT" | mc pipe test-minio/test/object001
 OUTPUT="$(mc cat test-minio/test/object001)"

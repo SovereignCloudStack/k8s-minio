@@ -5,6 +5,10 @@ set -ex
 mc config host add test-minio http://minio-service:9000 minio minio123
 mc mb test
 INPUT="Hello from object storage"
-echo -n "$INPUT" | mc pipe minio-test/test/object001
-OUTPUT="$(mc cat minio-test/test/object001)"
+echo -n "$INPUT" | mc pipe test-minio/test/object001
+OUTPUT="$(mc cat test-minio/test/object001)"
+
+# Assert that we did not write to local file
+stat test-minio >/dev/null 2>/dev/null && exit 1 || echo "Did not write to local file"
+
 [[ "$OUTPUT" = "$INPUT" ]] || exit 1'
